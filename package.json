@@ -1,0 +1,30 @@
+{
+  "name": "movies-explorer-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "lint": "eslint --ignore-path .eslintignore . --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PavelKuzmichev/movies-explorer-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PavelKuzmichev/movies-explorer-api/issues"
+  },
+  "homepage": "https://github.com/PavelKuzmichev/movies-explorer-api#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "express": "^4.17.1",
+    "mongoose": "^5.12.12"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
