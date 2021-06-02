@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
 const DefaultError = require('../middlewares/defaultError');
+
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -19,13 +20,14 @@ const userSchema = new mongoose.Schema({
       },
       message: 'Строка должна содержать Email!',
     },
-    password: {
-      type: String,
-      required: true,
-      select: false,
-    }
-  }
-})
+  },
+  password: {
+    type: String,
+    required: true,
+    minlength: 8,
+    select: false,
+  },
+});
 userSchema.statics.findUserByCredentials = function (email, password) {
   return this.findOne({ email }).select('+password')
     .then((user) => {
@@ -43,4 +45,4 @@ userSchema.statics.findUserByCredentials = function (email, password) {
         });
     });
 };
-module.exports = mongoose.model('user', userSchema);
+exports.User = mongoose.model('users', userSchema);

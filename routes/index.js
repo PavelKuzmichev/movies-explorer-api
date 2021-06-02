@@ -3,9 +3,9 @@ const DefaultError = require('../middlewares/defaultError');
 
 const routes = express.Router();
 const { userRoutes } = require('./users');
-const { cardRoutes } = require('./cards');
+const { movieRoutes } = require('./movies');
 
-routes.use('/movies', cardRoutes);
+//routes.use('/movies', movieRoutes);
 routes.use('/users', userRoutes);
 routes.use('/', () => {
   throw new DefaultError(404, 'Запрашиваемый ресурс не найден');
