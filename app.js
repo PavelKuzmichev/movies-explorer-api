@@ -12,11 +12,8 @@ const { routes } = require('./routes/index');
 const { auth } = require('./middlewares/auth');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
-<<<<<<< HEAD
-=======
 const { limiter } = require('./middlewares/limiter');
 
->>>>>>> 44c3f57071749f45714fb78b2831feda69480121
 const app = express();
 
 app.use(limiter);
