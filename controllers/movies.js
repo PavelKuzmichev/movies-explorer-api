@@ -49,7 +49,10 @@ exports.createMovie = (req, res, next) => {
 exports.deleteMovie = (req, res, next) => {
   Movie.findOne({ movieId: req.params.movieId })
     .then((movie) => {
+<<<<<<< HEAD
       console.log(movie);
+=======
+>>>>>>> 44c3f57071749f45714fb78b2831feda69480121
       if (!movie) {
         throw new DefaultError(404, 'Карточка не найдена');
       }
