@@ -3,12 +3,10 @@ const { celebrate, Joi } = require('celebrate');
 
 const userRoutes = express.Router();
 const {
-    getUser, updateUser,
+  getUser, updateUser,
 } = require('../controllers/users');
 
-
 userRoutes.get('/me', getUser);
-
 
 userRoutes.patch('/me', celebrate({
   body: Joi.object().keys({
@@ -16,6 +14,5 @@ userRoutes.patch('/me', celebrate({
     email: Joi.string().required().email(),
   }),
 }), updateUser);
-
 
 exports.userRoutes = userRoutes;

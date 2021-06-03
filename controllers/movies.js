@@ -47,9 +47,8 @@ exports.createMovie = (req, res, next) => {
 };
 
 exports.deleteMovie = (req, res, next) => {
-  Movie.findOne({ movieId: req.params.movieId})
+  Movie.findOne({ movieId: req.params.movieId })
     .then((movie) => {
-console.log(movie)
       if (!movie) {
         throw new DefaultError(404, 'Карточка не найдена');
       }
@@ -58,7 +57,7 @@ console.log(movie)
         throw new DefaultError(403, 'Нет прав для совершения данной операции');
       }
 
-      Movie.findOneAndRemove({ movieId: req.params.movieId})
+      Movie.findOneAndRemove({ movieId: req.params.movieId })
         .then(() => res.status(200).send('Карточка удалена'));
     })
     .catch(next);

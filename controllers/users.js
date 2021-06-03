@@ -30,7 +30,8 @@ exports.createUser = (req, res, next) => {
         throw new DefaultError(409, 'Пользователь с таким E-mail уже существует');
       }
     })
-    .catch(next);}
+    .catch(next);
+};
 exports.updateUser = (req, res, next) => {
   const { name, email } = req.body;
 
@@ -57,10 +58,9 @@ exports.updateUser = (req, res, next) => {
 };
 exports.login = (req, res, next) => {
   const { email, password } = req.body;
-  console.log(password)
+  console.log(password);
   return User.findUserByCredentials(email, password)
     .then((user) => {
-
       const token = jwt.sign(
         { _id: user._id },
         NODE_ENV === 'production' ? JWT_SECRET : 'dev-key',
@@ -72,7 +72,7 @@ exports.login = (req, res, next) => {
           httpOnly: true,
           sameSite: true,
         })
-        .status(200).send({token});
+        .status(200).send({ token });
     })
     .catch(next);
 };
