@@ -7,7 +7,6 @@ exports.getMovies = (req, res, next) => {
     .catch(next);
 };
 exports.createMovie = (req, res, next) => {
-  console.log(req.user._id);
   const {
     country,
     director,

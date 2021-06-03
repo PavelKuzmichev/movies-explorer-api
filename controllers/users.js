@@ -58,7 +58,7 @@ exports.updateUser = (req, res, next) => {
 };
 exports.login = (req, res, next) => {
   const { email, password } = req.body;
-  console.log(password);
+
   return User.findUserByCredentials(email, password)
     .then((user) => {
       const token = jwt.sign(
