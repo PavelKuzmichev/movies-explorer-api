@@ -34,7 +34,6 @@ exports.createUser = (req, res, next) => {
 };
 exports.updateUser = (req, res, next) => {
   const { name, email } = req.body;
-
   User.findByIdAndUpdate(
     req.user._id,
     { name, email },
@@ -45,13 +44,16 @@ exports.updateUser = (req, res, next) => {
     },
   )
     .then((userProfile) => {
-      res.status(200).send(userProfile);
+      if (userProfile) {
+        res.status(200).send(userProfile);
+      } else { next(new DefaultError(404, 'Данный пользователь не найден')); }
     })
     .catch((err) => {
+      console.log(err.message);
       if (err.name === 'ValidationError') {
         throw new DefaultError(400, 'Переданы некорректные данные');
-      } else if (err.message === 'NotValidId') {
-        throw new DefaultError(404, 'Данный пользователь не найден');
+      } else if (err.name === 'MongoError' && err.code === 11000) {
+        throw new DefaultError(409, 'Пользователь с таким E-mail уже существует');
       }
     })
     .catch(next);
