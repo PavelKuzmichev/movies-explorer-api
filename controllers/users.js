@@ -49,7 +49,6 @@ exports.updateUser = (req, res, next) => {
       } else { next(new DefaultError(404, 'Данный пользователь не найден')); }
     })
     .catch((err) => {
-      console.log(err.message);
       if (err.name === 'ValidationError') {
         throw new DefaultError(400, 'Переданы некорректные данные');
       } else if (err.name === 'MongoError' && err.code === 11000) {
