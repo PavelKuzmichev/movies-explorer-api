@@ -3,7 +3,7 @@ const express = require('express');
 const helmet = require('helmet');
 const mongoose = require('mongoose');
 
-const { PORT = 3000 } = process.env;
+const { PORT = 3000, NODE_ENV, MONGO_LINK } = process.env;
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
@@ -25,28 +25,24 @@ app.use(cors({
 app.use(helmet());
 app.use(express.json());
 app.use(cookieParser());
-
+console.log(NODE_ENV)
 app.use(routes);
-async function main() {
-  await mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useUnifiedTopology: true,
-  });
-  app.use(errorLogger);
-  app.use(errors());
-  app.use((err, req, res, next) => {
-    const { statusCode = 500, message } = err;
-    res
-      .status(statusCode)
-      .send({
-        message: !message
-          ? 'На сервере произошла ошибка' : message,
-      });
-    return next();
-  });
-
-  await app.listen(PORT);
-  console.log(`App listening on port ${PORT}`);
-}
-main();
+mongoose.connect( NODE_ENV === 'production' ? MONGO_LINK : 'mongodb://localhost:27017/bitfilmsdb', {
+  useNewUrlParser: true,
+  useCreateIndex: true,
+  useUnifiedTopology: true,
+});
+app.use(errorLogger);
+app.use(errors());
+app.use((err, req, res, next) => {
+  const { statusCode = 500, message } = err;
+  res
+    .status(statusCode)
+    .send({
+      message: !message
+        ? 'На сервере произошла ошибка' : message,
+    });
+  return next();
+});
+app.listen(PORT);
+console.log(`App listening on port ${PORT}`);

@@ -28,7 +28,7 @@ exports.createUser = (req, res, next) => {
         throw new DefaultError(400, 'Переданы некорректные данные');
       } else if (err.name === 'MongoError' && err.code === 11000) {
         throw new DefaultError(409, 'Пользователь с таким E-mail уже существует');
-      }
+      } throw err;
     })
     .catch(next);
 };
@@ -53,7 +53,7 @@ exports.updateUser = (req, res, next) => {
         throw new DefaultError(400, 'Переданы некорректные данные');
       } else if (err.name === 'MongoError' && err.code === 11000) {
         throw new DefaultError(409, 'Пользователь с таким E-mail уже существует');
-      }
+      } throw err;
     })
     .catch(next);
 };

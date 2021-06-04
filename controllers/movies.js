@@ -40,7 +40,7 @@ exports.createMovie = (req, res, next) => {
         throw new DefaultError(400, 'Переданы некорректные данные');
       } else if (err.name === 'MongoError' && err.code === 11000) {
         throw new DefaultError(409, 'фильм с таким movieId уже существует');
-      }
+      } throw err;
     })
     .catch(next);
 };
@@ -48,7 +48,6 @@ exports.createMovie = (req, res, next) => {
 exports.deleteMovie = (req, res, next) => {
   Movie.findOne({ movieId: req.params.movieId })
     .then((movie) => {
-      console.log(movie._id);
       if (!movie) {
         throw new DefaultError(404, 'Карточка не найдена');
       }
