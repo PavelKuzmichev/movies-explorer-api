@@ -25,9 +25,9 @@ app.use(cors({
 app.use(helmet());
 app.use(express.json());
 app.use(cookieParser());
-console.log(NODE_ENV)
+
 app.use(routes);
-mongoose.connect( NODE_ENV === 'production' ? MONGO_LINK : 'mongodb://localhost:27017/bitfilmsdb', {
+mongoose.connect(NODE_ENV === 'production' ? MONGO_LINK : 'mongodb://localhost:27017/bitfilmsdb', {
   useNewUrlParser: true,
   useCreateIndex: true,
   useUnifiedTopology: true,
