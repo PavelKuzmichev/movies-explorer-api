@@ -46,7 +46,7 @@ exports.createMovie = (req, res, next) => {
 };
 
 exports.deleteMovie = (req, res, next) => {
-  Movie.findOne({ movieId: req.params.movieId })
+  Movie.findOne({ _id: req.params.movieId })
     .then((movie) => {
       if (!movie) {
         throw new DefaultError(404, 'Карточка не найдена');
