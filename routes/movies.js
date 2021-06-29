@@ -17,7 +17,7 @@ movieRoutes.post('/', celebrate({
     nameRU: Joi.string().required().min(1).max(100),
     nameEN: Joi.string().required().min(1).max(100),
     image: Joi.string().required().pattern(/^(https?:\/\/(www\.)?)[\w-]+\.[\w./():,-]+#?$/),
-    trailer: Joi.string().required().pattern(/^(https?:\/\/(www\.)?)[\w-]+\.[\w./():,-]+#?$/),
+    trailer: Joi.string().required().pattern(/^(https?:\/\/(www\.)?)[\w-]+\./),
     thumbnail: Joi.string().required().pattern(/^(https?:\/\/(www\.)?)[\w-]+\.[\w./():,-]+#?$/),
     movieId: Joi.number().required(),
   }),

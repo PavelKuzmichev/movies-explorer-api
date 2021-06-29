@@ -2,39 +2,20 @@ const { Movie } = require('../models/movie');
 const DefaultError = require('../middlewares/defaultError');
 
 exports.getMovies = (req, res, next) => {
-  Movie.find({ owner: req.user._id })
-    .then((movie) => res.status(200).send({ data: movie }))
+  const owner = req.user._id;
+  Movie.find({ owner })
+    .then((movies) => res.status(200).send(movies))
     .catch(next);
 };
+
 exports.createMovie = (req, res, next) => {
-  const {
-    country,
-    director,
-    duration,
-    year,
-    description,
-    image,
-    trailer,
-    nameRU,
-    nameEN,
-    thumbnail,
-    movieId,
-  } = req.body;
-  Movie.create({
-    country,
-    director,
-    duration,
-    year,
-    description,
-    image,
-    trailer,
-    nameRU,
-    nameEN,
-    thumbnail,
-    movieId,
-    owner: req.user._id,
-  })
-    .then((movie) => res.status(200).send({ data: movie }))
+  const owner = req.user._id;
+  Movie.create({ owner, ...req.body })
+    .then((movie) => {
+      const data = movie;
+      data.owner = owner;
+      res.status(200).send(data);
+    })
     .catch((err) => {
       if (err.name === 'ValidationError') {
         throw new DefaultError(400, 'Переданы некорректные данные');
@@ -46,7 +27,7 @@ exports.createMovie = (req, res, next) => {
 };
 
 exports.deleteMovie = (req, res, next) => {
-  Movie.findOne({ _id: req.params.movieId })
+  Movie.findById(req.params.movieId).select('+owner')
     .then((movie) => {
       if (!movie) {
         throw new DefaultError(404, 'Карточка не найдена');
@@ -56,8 +37,11 @@ exports.deleteMovie = (req, res, next) => {
         throw new DefaultError(403, 'Нет прав для совершения данной операции');
       }
 
-      return Movie.deleteOne({ _id: movie._id })
-        .then(() => res.status(200).send('Карточка удалена'));
+      else {
+        Movie.findByIdAndRemove(req.params.movieId)
+          .then((data) => res.status(200).send(data))
+          .catch(next);
+      }
     })
     .catch(next);
 };

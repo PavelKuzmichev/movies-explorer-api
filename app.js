@@ -3,7 +3,7 @@ const express = require('express');
 const helmet = require('helmet');
 const mongoose = require('mongoose');
 
-const { PORT = 3000, NODE_ENV, MONGO_LINK } = process.env;
+const { PORT = 3001, NODE_ENV, MONGO_LINK } = process.env;
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
@@ -27,9 +27,11 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use(routes);
+
 mongoose.connect(NODE_ENV === 'production' ? MONGO_LINK : 'mongodb://localhost:27017/bitfilmsdb', {
   useNewUrlParser: true,
   useCreateIndex: true,
+  useFindAndModify: false,
   useUnifiedTopology: true,
 });
 app.use(errorLogger);
