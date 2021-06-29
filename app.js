@@ -17,12 +17,8 @@ const { limiter } = require('./middlewares/limiter');
 const app = express();
 app.use(requestLogger);
 app.use(limiter);
-app.use(cors({
-  origin: true,
-  exposedHeaders: '*',
-  credentials: true,
-}));
 app.use(helmet());
+app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 
